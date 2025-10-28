@@ -6,6 +6,8 @@ import com.ecommerce.domain.exception.ApplicationException;
 import com.ecommerce.domain.repository.entity.DABOUser;
 import com.ecommerce.infrastructure.repository.DABOUserRepository;
 //import com.sun.jdi.request.DuplicateRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +25,7 @@ public class DABOUserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CommonService commonService;
     private final MailingService mailingService;
+    private static final Logger logger = LoggerFactory.getLogger(DABOUserService.class);
 
     @Autowired
     public DABOUserService(DABOUserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, CommonService commonService, MailingService mailingService) {
@@ -37,37 +41,31 @@ public class DABOUserService {
                 .sorted((a, b) -> (int) (b.getPoint()-a.getPoint()))
                 .collect(Collectors.toList());
 
-        if(!list.isEmpty()){
-            return list;
-        }
-        throw new NullPointerException();
+        return Optional.of(list)
+                .filter(l -> !l.isEmpty())
+                .orElseThrow(() -> new ApplicationException("회원 정보를 찾을 수 없습니다."));
     }
 
     // 닉네임 중복 검사
     public boolean DuplicatedNickname(String nickname) {
-        Optional<DABOUser> user = userRepository.findDABOUserByNickname(nickname);
-        if(user.isPresent()){
-            return false;
-        }
-        return true;
+        AtomicBoolean available = new AtomicBoolean(true);
+        userRepository.findDABOUserByNickname(nickname)
+                .ifPresent(found -> available.set(false));
+        return available.get();
     }
 
     // 이메일 중복 검사
     public boolean DuplicatedEmail(String email) {
-        Optional<DABOUser> user = userRepository.findDABOUserByEmail(email);
-        if(user.isPresent()){
-            return false;
-        }
-        return true;
+        AtomicBoolean available = new AtomicBoolean(true);
+        userRepository.findDABOUserByEmail(email)
+                .ifPresent(found -> available.set(false));
+        return available.get();
     }
 
     public DABOUser get() {
         DABOUser userTemp = commonService.getLoginUser();
-        Optional<DABOUser> user = userRepository.findDABOUserByEmail(userTemp.getEmail());
-        if(user.isPresent()){
-            return user.get();
-        }
-        return null;
+        return userRepository.findDABOUserByEmail(userTemp.getEmail())
+                .orElseThrow(() -> new ApplicationException("회원 정보를 찾을 수 없습니다."));
     }
 
     @Transactional
@@ -89,10 +87,8 @@ public class DABOUserService {
     public DABOUser update(daboUserDto userDto) {
         DABOUser user = commonService.getLoginUser();
 
-        Optional<DABOUser> found = userRepository.findDABOUserByEmail(user.getEmail());
-        if(found == null)
-            throw new ApplicationException("회원 정보를 찾을 수 없습니다.");
-        DABOUser userUpdate = found.get();
+        DABOUser userUpdate = userRepository.findDABOUserByEmail(user.getEmail())
+                .orElseThrow(() -> new ApplicationException("회원 정보를 찾을 수 없습니다."));
 
         if(userDto.getPassword() != null) userUpdate.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         if(userDto.getBloodType() != null) userUpdate.setBloodType(userDto.getBloodType());
@@ -116,16 +112,13 @@ public class DABOUserService {
     }
 
     public DABOUser resetPassword(String email) throws Exception{
-        Optional<DABOUser> userTemp = userRepository.findDABOUserByEmail(email);
-        System.out.println("userTemp = " + userTemp);
-        if(userTemp.isPresent()){
-            DABOUser user = userTemp.get();
-            String newPassword = mailingService.sendSimpleMessage(email);
-            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-            userRepository.save(user);
-            return user;
-        }
-        throw new ApplicationException("회원 정보를 찾을 수 없습니다.");
+        logger.debug("Resetting password for email: {}", email);
+        DABOUser user = userRepository.findDABOUserByEmail(email)
+                .orElseThrow(() -> new ApplicationException("회원 정보를 찾을 수 없습니다."));
+        String newPassword = mailingService.sendSimpleMessage(email);
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return user;
     }
 }
 
