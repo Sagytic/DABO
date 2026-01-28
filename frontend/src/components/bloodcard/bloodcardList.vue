@@ -1,35 +1,53 @@
 <template>
   <div class="cardlist-page">
     <div class="cardlist-header">
-      <button @click="backBtn"><img src="@/assets/back.png" /></button>
+      <button @click="backBtn" aria-label="Go back"><img src="@/assets/back.png" /></button>
     </div>
     <div class="cardlist-title">
       <span>나의 헌혈증</span>
     </div>
-    <div
-      v-for="(bloodCard, bloodCardId) in bloodLists"
-      :key="bloodCardId"
-      :per-page="perPage"
-      :current-page="currentPage"
-      class="d-flex cardlist-conentents"
-    >
-      <div class="imoge col-4"><img src="@/assets/border-imoge.png" /></div>
-      <div class="col-8">
-        <span>{{ bloodCard.donationDate }} 헌혈증</span>
-        <p>증서번호 : {{ bloodCard.bloodCardNumber }}</p>
-        <p>혈액원명 : {{ bloodCard.bloodHouse }}</p>
-        <p>성명 : {{ bloodCard.userName }}</p>
-        <p>헌혈종류 : {{ bloodCard.donationType }}</p>
-      </div>
+
+    <!-- Loading State -->
+    <div v-if="isLoading" class="text-center my-5">
+      <v-progress-circular
+        :size="50"
+        color="#e52d27"
+        indeterminate
+      ></v-progress-circular>
     </div>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="bloodcard"
-      align="center"
-    >
-    </b-pagination>
+
+    <!-- Empty State -->
+    <div v-else-if="bloodCards.length === 0" class="text-center my-5">
+      <p class="text-muted" style="font-size: 1.1rem;">보유하신 헌혈증이 없습니다.</p>
+    </div>
+
+    <!-- List Content -->
+    <div v-else>
+      <div
+        v-for="(bloodCard, bloodCardId) in bloodLists"
+        :key="bloodCardId"
+        :per-page="perPage"
+        :current-page="currentPage"
+        class="d-flex cardlist-conentents"
+      >
+        <div class="imoge col-4"><img src="@/assets/border-imoge.png" /></div>
+        <div class="col-8">
+          <span>{{ bloodCard.donationDate }} 헌혈증</span>
+          <p>증서번호 : {{ bloodCard.bloodCardNumber }}</p>
+          <p>혈액원명 : {{ bloodCard.bloodHouse }}</p>
+          <p>성명 : {{ bloodCard.userName }}</p>
+          <p>헌혈종류 : {{ bloodCard.donationType }}</p>
+        </div>
+      </div>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="bloodcard"
+        align="center"
+      >
+      </b-pagination>
+    </div>
   </div>
 </template>
 
@@ -42,129 +60,8 @@ export default {
       perPage: 3,
       // 현재 페이지
       currentPage: 1,
-      bloodCards: [
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "1",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "1",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "1",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "1",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "1",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "15",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "16",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "17",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 1,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "18",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 10,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "19",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 10,
-          userName: "이제훈",
-        },
-        {
-          bloodCardId: 1,
-          bloodCardNumber: "20",
-          bloodHouse: "헌혈의집",
-          donationDate: "1996-01-01",
-          donationType: "전혈 400ml",
-          userBirth: "1996-01-01",
-          userGender: "M",
-          userId: 10,
-          userName: "이제훈",
-        },
-      ],
+      isLoading: false,
+      bloodCards: [],
     };
   },
   mounted() {
@@ -184,13 +81,16 @@ export default {
   },
   methods: {
     getList() {
+      this.isLoading = true;
       const vm = this;
       findByBloodCard(
         function (response) {
           vm.bloodCards = response.data;
+          vm.isLoading = false;
           console.log(vm.bloodCards);
         },
         function (err) {
+          vm.isLoading = false;
           console.log(err);
         }
       );
