@@ -104,7 +104,8 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Bolt Optimization: Use findAllWithUser to avoid N+1 query problem
+        for(Campaign campaign : campaignRepository.findAllWithUser()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -311,7 +312,8 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Bolt Optimization: Use findAllWithUser to avoid N+1 query problem
+        for(Campaign campaign : campaignRepository.findAllWithUser()) {
 
             CampaignDto campaignDto = new CampaignDto();
 

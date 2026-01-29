@@ -13,6 +13,10 @@ import java.util.List;
 public interface ICampaignRepository  extends JpaRepository<Campaign, Long> {
     List<Campaign> findByTitleContaining(String keyword);
 
+    // Bolt Optimization: Fetch campaigns with users in a single query to prevent N+1 problem
+    @Query("SELECT c FROM Campaign c LEFT JOIN FETCH c.user")
+    List<Campaign> findAllWithUser();
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE campaign set receive_blood_card = receive_blood_card+1 where campaign_id = :campaignId",nativeQuery = true)
