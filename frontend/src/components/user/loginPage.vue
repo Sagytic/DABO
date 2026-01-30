@@ -2,34 +2,40 @@
   <div class="login-page">
     <p class="header">Log In</p>
 
-    <div class="submit-form">
+    <form class="submit-form" @submit.prevent="login">
       <input
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
+        aria-label="Email"
       />
       <input
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        aria-label="Password"
       />
       <div class="btn_findpw">
-        <button @click="$router.push({ name: 'findpassword' })">
-          Forget yout password?
+        <button type="button" @click="$router.push({ name: 'findpassword' })">
+          Forget your password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
-        <span>Login</span>
+
+      <p v-if="errorMessage" class="error-msg">{{ errorMessage }}</p>
+
+      <button type="submit" class="btn_red" :disabled="isLoading">
+        <b-spinner small v-if="isLoading" class="mr-1"></b-spinner>
+        <span>{{ isLoading ? 'Logging in...' : 'Login' }}</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
       </button> -->
-      <button @click="$router.push({ name: 'signup' })" class="btn_red">
+      <button type="button" @click="$router.push({ name: 'signup' })" class="btn_red">
         <span>SignUp</span>
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -47,20 +53,23 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
+      errorMessage: "",
     };
   },
   methods: {
     ...mapActions(["loginGetToken"]),
     login() {
-      console.log("로그인 실행");
+      this.errorMessage = "";
       if (this.userData.email === "") {
-        alert("아이디 미입력");
+        this.errorMessage = "Please enter email.";
         return false;
       } else if (this.userData.password === "") {
-        alert("패스워드 미입력");
+        this.errorMessage = "Please enter password.";
         return false;
       }
 
+      this.isLoading = true;
       console.log("loginAPI START");
       const scope = this;
 
@@ -114,34 +123,15 @@ export default {
             }
           );
 
+          scope.isLoading = false;
           scope.$router.push({ name: "home" });
         },
         function (error) {
+          scope.isLoading = false;
           console.error(error);
-          alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
+          scope.errorMessage = "Email or password does not match.";
         }
       );
-      
-      // axios({
-      //   method: "post",
-      //   url: API_BASE_URL + "/api/user/login",
-      //   data: this.userData,
-      // })
-      //   .then((res) => {
-      //     if (res.status == 200) {
-      //       console.log("로그인 성공");
-      //       alert("로그인 성공");
-      //       this.$emit("login");
-      //       this.loginGetToken(res.data.accessToken);
-      //       this.$router.push({ name: "home" });
-      //     } else {
-      //       alert(res.data.message);
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     alert("로그인 실패");
-      //   });
     },
     
   },
@@ -165,6 +155,13 @@ export default {
   height: 35px;
   font-size: 12px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn_red:disabled {
+  background-color: #ff8b88;
+  cursor: not-allowed;
 }
 .btn_social {
   background-color: #fee500;
@@ -208,5 +205,13 @@ export default {
   color: #bdbdbd;
   font-size: 12px;
   padding: 10px;
+}
+.error-msg {
+  color: #e52d27;
+  font-size: 12px;
+  margin: 5px 0;
+}
+.mr-1 {
+  margin-right: 0.5rem;
 }
 </style>
