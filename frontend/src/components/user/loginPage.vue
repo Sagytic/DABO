@@ -3,13 +3,17 @@
     <p class="header">Log In</p>
 
     <div class="submit-form">
+      <label for="email" class="input-label">Email</label>
       <input
+        id="email"
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
       />
+      <label for="password" class="input-label">Password</label>
       <input
+        id="password"
         v-model="userData.password"
         type="password"
         name="password"
@@ -20,8 +24,9 @@
           Forget yout password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
-        <span>Login</span>
+      <button @click="login()" class="btn_red" :disabled="isLoading">
+        <span v-if="isLoading">Logging in...</span>
+        <span v-else>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
@@ -47,6 +52,7 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
     };
   },
   methods: {
@@ -61,12 +67,14 @@ export default {
         return false;
       }
 
+      this.isLoading = true;
       console.log("loginAPI START");
       const scope = this;
 
       loginAPI(
         this.userData,
         function (response) {
+          scope.isLoading = false;
           console.log(response);
           scope.$store.commit("setIsSigned", true);
           
@@ -117,6 +125,7 @@ export default {
           scope.$router.push({ name: "home" });
         },
         function (error) {
+          scope.isLoading = false;
           console.error(error);
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
         }
@@ -208,5 +217,14 @@ export default {
   color: #bdbdbd;
   font-size: 12px;
   padding: 10px;
+}
+.input-label {
+  display: block;
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
 }
 </style>
