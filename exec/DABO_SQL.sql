@@ -169,7 +169,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ssafy','ssafy','2022-03-21 02:40:26','ssafy'),(2,'string','string','2022-03-21 02:45:17','string'),(3,'코인유저','코인유저@yahoo.com','2022-03-21 02:46:11','qwer');
+INSERT INTO `users` VALUES (1,'ssafy','ssafy','2022-03-21 02:40:26','ENCRYPTED_PASSWORD'),(2,'string','string','2022-03-21 02:45:17','string'),(3,'코인유저','코인유저@yahoo.com','2022-03-21 02:46:11','qwer');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
