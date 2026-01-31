@@ -2,44 +2,13 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import landing from "@/views/landing/landingPage.vue";
 import Home from "@/views/mainPage.vue";
-import badge from "@/views/badge/badgeMain.vue";
 
-import daboWallet from "@/views/daboWallet/daboWalletMain.vue";
+// OPTIMIZATION: Route-based code splitting
+// Non-critical routes are lazy-loaded to reduce initial bundle size.
+// Critical routes (landing, home) remain eager-loaded for faster LCP.
 
-import donationBoard from "@/views/donationBoard/donationBoardPage.vue";
-import ListBoard from "@/components/campaign/donationBoardList.vue";
-import ListItem from "@/components/campaign/donationBoardListItem.vue";
-import CreateBoard from "@/components/campaign/donationBoardCreate.vue";
-import UpdateBoard from "@/components/campaign/donationBoardUpdate.vue";
-import DetailBoard from "@/components/campaign/donationBoardDetail.vue";
-import MyDonation from "@/components/campaign/bloodCardDonation.vue";
-import DonationConfirm from "@/components/campaign/donationConfirm.vue";
-import DaboDonation from "@/components/campaign/daboDonation.vue";
-import DaboConfirm from "@/components/campaign/daboConfirm.vue";
-
-import reservation from "@/views/reservation/reservationMain.vue";
-import BloodHouseList from "@/components/reservation/bloodHouseList.vue";
-import NowReservation from "@/components/reservation/nowReservation.vue";
-import ReservationHistory from "@/components/reservation/reservationHistory.vue";
-
-import bloodCard from "@/views/bloodCard/bloodCard.vue";
-import bloodcardList from "@/components/bloodcard/bloodcardList.vue";
-import bloodcardCreate from "@/components/bloodcard/bloodcardCreate.vue";
-
-import user from "@/views/user/userPage.vue";
-import Login from "@/components/user/loginPage.vue";
-import Signup from "@/components/user/signUp.vue";
-import infoChange from "@/components/user/infoChange.vue";
-import Ranking from "@/components/user/rankingDetail.vue";
-import myDabo from "@/views/user/myDabo.vue";
-import chargeDabo from "@/views/daboWallet/chargeDabo.vue";
-import payDabo from "@/views/daboWallet/payDabo.vue";
-import chargeConfirm from "@/views/daboWallet/chargeConfirm.vue";
-
-import Findpassword from "@/components/user/findPassword.vue";
 Vue.use(VueRouter);
-import exBlockChain from "@/views/exBlockChain.vue";
-import testDabo from "@/components/wallet/testDabo.vue"
+
 const routes = [
   {
     path: "/",
@@ -54,32 +23,32 @@ const routes = [
   {
     path: "/user",
     name: "user",
-    component: user,
+    component: () => import("@/views/user/userPage.vue"),
     children: [
       {
         path: "login",
         name: "login",
-        component: Login,
+        component: () => import("@/components/user/loginPage.vue"),
       },
       {
         path: "signup",
         name: "signup",
-        component: Signup,
+        component: () => import("@/components/user/signUp.vue"),
       },
       {
         path: "findpassword",
         name: "findpassword",
-        component: Findpassword,
+        component: () => import("@/components/user/findPassword.vue"),
       },
       {
         path: "infochange",
         name: "infoChange",
-        component: infoChange,
+        component: () => import("@/components/user/infoChange.vue"),
       },
       {
         path: "ranking",
         name: "ranking",
-        component: Ranking,
+        component: () => import("@/components/user/rankingDetail.vue"),
       },
     ],
   },
@@ -87,81 +56,81 @@ const routes = [
   {
     path: "/reservation",
     name: "reservation",
-    component: reservation,
+    component: () => import("@/views/reservation/reservationMain.vue"),
     children: [
       {
         path: "bloodHouseList",
         name: "bloodHouseList",
-        component: BloodHouseList,
+        component: () => import("@/components/reservation/bloodHouseList.vue"),
       },
       {
         path: "nowReservation",
         name: "nowReservation",
-        component: NowReservation,
+        component: () => import("@/components/reservation/nowReservation.vue"),
       },
       {
         path: "reservationHistory",
         name: "reservationHistory",
-        component: ReservationHistory,
+        component: () => import("@/components/reservation/reservationHistory.vue"),
       },
     ],
   },
   {
     path: "/donationBoard",
     name: "donationBoard",
-    component: donationBoard,
+    component: () => import("@/views/donationBoard/donationBoardPage.vue"),
     children: [
       {
         path: "listBoard",
         name: "listBoard",
-        component: ListBoard,
+        component: () => import("@/components/campaign/donationBoardList.vue"),
       },
       {
         path: "listItem",
         name: "listItem",
-        component: ListItem,
+        component: () => import("@/components/campaign/donationBoardListItem.vue"),
       },
       {
         path: "createBoard",
         name: "createBoard",
-        component: CreateBoard,
+        component: () => import("@/components/campaign/donationBoardCreate.vue"),
       },
       {
         path: "updateBoard",
         name: "updateBoard",
-        component: UpdateBoard,
+        component: () => import("@/components/campaign/donationBoardUpdate.vue"),
       },
       {
         path: "detailBoard/:campaignId",
         name: "detailBoard",
-        component: DetailBoard,
+        component: () => import("@/components/campaign/donationBoardDetail.vue"),
       },
       {
         path: "myDonation",
         name: "myDonation",
-        component: MyDonation,
+        component: () => import("@/components/campaign/bloodCardDonation.vue"),
       },
       {
         path: "donationConfirm",
         name: "donationConfirm",
-        component: DonationConfirm,
+        component: () => import("@/components/campaign/donationConfirm.vue"),
       },
       {
         path: "daboDonation",
         name: "daboDonation",
-        component: DaboDonation,
+        component: () => import("@/components/campaign/daboDonation.vue"),
       },
       {
         path: "daboConfirm",
         name: "daboConfirm",
-        component: DaboConfirm,
+        component: () => import("@/components/campaign/daboConfirm.vue"),
       },
     ],
   },
   {
     path: "/dabowallet",
     name: "daboWallet",
-    component: daboWallet,
+    component: () => import("@/views/daboWallet/daboWalletMain.vue"),
     // children: [
     //   {
     //     path: "/chargedabo",
@@ -173,54 +142,54 @@ const routes = [
   {
     path: "/testDabo",
     name: "testDabo",
-    component: testDabo,
+    component: () => import("@/components/wallet/testDabo.vue"),
   },
   {
     path: "/dabowallet/chargedabo",
     name: "chargedabo",
-    component: chargeDabo,
+    component: () => import("@/views/daboWallet/chargeDabo.vue"),
   },
   {
     path: "/dabowallet/paydabo",
     name: "paydabo",
-    component: payDabo,
+    component: () => import("@/views/daboWallet/payDabo.vue"),
   },
   {
     path: "/dabowallet/chargeconfirm",
     name: "chargeconfirm",
-    component: chargeConfirm,
+    component: () => import("@/views/daboWallet/chargeConfirm.vue"),
   },
   {
     path: "/bloodcard",
     name: "bloodCard",
-    component: bloodCard,
+    component: () => import("@/views/bloodCard/bloodCard.vue"),
     children: [
       {
         path: "list",
         name: "bloodcardList",
-        component: bloodcardList,
+        component: () => import("@/components/bloodcard/bloodcardList.vue"),
       },
       {
         path: "create",
         name: "bloodcardCreate",
-        component: bloodcardCreate,
+        component: () => import("@/components/bloodcard/bloodcardCreate.vue"),
       },
     ],
   },
   {
     path: "/badge",
     name: "badge",
-    component: badge,
+    component: () => import("@/views/badge/badgeMain.vue"),
   },
   {
     path: "/mydabo",
     name: "myDabo",
-    component: myDabo,
+    component: () => import("@/views/user/myDabo.vue"),
   },
   {
     name: "exBlockChain",
     path: "/exBlockChain",
-    component: exBlockChain,
+    component: () => import("@/views/exBlockChain.vue"),
     children: [
       {
         name: "exBlockChain.dashboard",
