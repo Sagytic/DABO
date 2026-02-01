@@ -2,34 +2,42 @@
   <div class="login-page">
     <p class="header">Log In</p>
 
-    <div class="submit-form">
+    <form class="submit-form" @submit.prevent="login">
+      <label for="login-email">Email</label>
       <input
+        id="login-email"
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
+        required
+        autocomplete="email"
       />
+      <label for="login-password">Password</label>
       <input
+        id="login-password"
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        required
+        autocomplete="current-password"
       />
       <div class="btn_findpw">
-        <button @click="$router.push({ name: 'findpassword' })">
+        <button type="button" @click="$router.push({ name: 'findpassword' })">
           Forget yout password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
+      <button type="submit" class="btn_red">
         <span>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
       </button> -->
-      <button @click="$router.push({ name: 'signup' })" class="btn_red">
+      <button type="button" @click="$router.push({ name: 'signup' })" class="btn_red">
         <span>SignUp</span>
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -208,5 +216,12 @@ export default {
   color: #bdbdbd;
   font-size: 12px;
   padding: 10px;
+}
+.submit-form label {
+  display: block;
+  text-align: left;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
 }
 </style>
