@@ -1,45 +1,53 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import landing from "@/views/landing/landingPage.vue";
-import Home from "@/views/mainPage.vue";
-import badge from "@/views/badge/badgeMain.vue";
 
-import daboWallet from "@/views/daboWallet/daboWalletMain.vue";
+// Views
+const landing = () => import(/* webpackChunkName: "landing" */ "@/views/landing/landingPage.vue");
+const Home = () => import(/* webpackChunkName: "home" */ "@/views/mainPage.vue");
+const badge = () => import(/* webpackChunkName: "badge" */ "@/views/badge/badgeMain.vue");
+const daboWallet = () => import(/* webpackChunkName: "daboWallet" */ "@/views/daboWallet/daboWalletMain.vue");
+const donationBoard = () => import(/* webpackChunkName: "donationBoard" */ "@/views/donationBoard/donationBoardPage.vue");
+const reservation = () => import(/* webpackChunkName: "reservation" */ "@/views/reservation/reservationMain.vue");
+const bloodCard = () => import(/* webpackChunkName: "bloodCard" */ "@/views/bloodCard/bloodCard.vue");
+const user = () => import(/* webpackChunkName: "user" */ "@/views/user/userPage.vue");
+const myDabo = () => import(/* webpackChunkName: "myDabo" */ "@/views/user/myDabo.vue");
+const chargeDabo = () => import(/* webpackChunkName: "chargeDabo" */ "@/views/daboWallet/chargeDabo.vue");
+const payDabo = () => import(/* webpackChunkName: "payDabo" */ "@/views/daboWallet/payDabo.vue");
+const chargeConfirm = () => import(/* webpackChunkName: "chargeConfirm" */ "@/views/daboWallet/chargeConfirm.vue");
+const exBlockChain = () => import(/* webpackChunkName: "exBlockChain" */ "@/views/exBlockChain.vue");
 
-import donationBoard from "@/views/donationBoard/donationBoardPage.vue";
-import ListBoard from "@/components/campaign/donationBoardList.vue";
-import ListItem from "@/components/campaign/donationBoardListItem.vue";
-import CreateBoard from "@/components/campaign/donationBoardCreate.vue";
-import UpdateBoard from "@/components/campaign/donationBoardUpdate.vue";
-import DetailBoard from "@/components/campaign/donationBoardDetail.vue";
-import MyDonation from "@/components/campaign/bloodCardDonation.vue";
-import DonationConfirm from "@/components/campaign/donationConfirm.vue";
-import DaboDonation from "@/components/campaign/daboDonation.vue";
-import DaboConfirm from "@/components/campaign/daboConfirm.vue";
+// Components - Donation Board
+const ListBoard = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationBoardList.vue");
+const ListItem = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationBoardListItem.vue");
+const CreateBoard = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationBoardCreate.vue");
+const UpdateBoard = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationBoardUpdate.vue");
+const DetailBoard = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationBoardDetail.vue");
+const MyDonation = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/bloodCardDonation.vue");
+const DonationConfirm = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/donationConfirm.vue");
+const DaboDonation = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/daboDonation.vue");
+const DaboConfirm = () => import(/* webpackChunkName: "donationBoard" */ "@/components/campaign/daboConfirm.vue");
 
-import reservation from "@/views/reservation/reservationMain.vue";
-import BloodHouseList from "@/components/reservation/bloodHouseList.vue";
-import NowReservation from "@/components/reservation/nowReservation.vue";
-import ReservationHistory from "@/components/reservation/reservationHistory.vue";
+// Components - Reservation
+const BloodHouseList = () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/bloodHouseList.vue");
+const NowReservation = () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/nowReservation.vue");
+const ReservationHistory = () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/reservationHistory.vue");
 
-import bloodCard from "@/views/bloodCard/bloodCard.vue";
-import bloodcardList from "@/components/bloodcard/bloodcardList.vue";
-import bloodcardCreate from "@/components/bloodcard/bloodcardCreate.vue";
+// Components - Blood Card
+const bloodcardList = () => import(/* webpackChunkName: "bloodCard" */ "@/components/bloodcard/bloodcardList.vue");
+const bloodcardCreate = () => import(/* webpackChunkName: "bloodCard" */ "@/components/bloodcard/bloodcardCreate.vue");
 
-import user from "@/views/user/userPage.vue";
-import Login from "@/components/user/loginPage.vue";
-import Signup from "@/components/user/signUp.vue";
-import infoChange from "@/components/user/infoChange.vue";
-import Ranking from "@/components/user/rankingDetail.vue";
-import myDabo from "@/views/user/myDabo.vue";
-import chargeDabo from "@/views/daboWallet/chargeDabo.vue";
-import payDabo from "@/views/daboWallet/payDabo.vue";
-import chargeConfirm from "@/views/daboWallet/chargeConfirm.vue";
+// Components - User
+const Login = () => import(/* webpackChunkName: "user" */ "@/components/user/loginPage.vue");
+const Signup = () => import(/* webpackChunkName: "user" */ "@/components/user/signUp.vue");
+const infoChange = () => import(/* webpackChunkName: "user" */ "@/components/user/infoChange.vue");
+const Ranking = () => import(/* webpackChunkName: "user" */ "@/components/user/rankingDetail.vue");
+const Findpassword = () => import(/* webpackChunkName: "user" */ "@/components/user/findPassword.vue");
 
-import Findpassword from "@/components/user/findPassword.vue";
+// Components - Wallet
+const testDabo = () => import(/* webpackChunkName: "wallet" */ "@/components/wallet/testDabo.vue");
+
 Vue.use(VueRouter);
-import exBlockChain from "@/views/exBlockChain.vue";
-import testDabo from "@/components/wallet/testDabo.vue"
+
 const routes = [
   {
     path: "/",
@@ -225,27 +233,27 @@ const routes = [
       {
         name: "exBlockChain.dashboard",
         path: "dashboard",
-        component: () => import("@/components/explorer/Dashboard.vue"),
+        component: () => import(/* webpackChunkName: "exBlockChain" */ "@/components/explorer/Dashboard.vue"),
       },
       {
         name: "exBlockChain.block",
         path: "blocks",
-        component: () => import("@/components/explorer/BlockListView.vue"),
+        component: () => import(/* webpackChunkName: "exBlockChain" */ "@/components/explorer/BlockListView.vue"),
       },
       {
         name: "exBlockChain.block.detail",
         path: "block/:blockNumber",
-        component: () => import("@/components/explorer/BlockDetail.vue"),
+        component: () => import(/* webpackChunkName: "exBlockChain" */ "@/components/explorer/BlockDetail.vue"),
       },
       {
         name: "exBlockChain.tx",
         path: "txes",
-        component: () => import("@/components/explorer/TxListView.vue"),
+        component: () => import(/* webpackChunkName: "exBlockChain" */ "@/components/explorer/TxListView.vue"),
       },
       {
         name: "exBlockChain.tx.detail",
         path: "tx/:hash",
-        component: () => import("@/components/explorer/TxDetail.vue"),
+        component: () => import(/* webpackChunkName: "exBlockChain" */ "@/components/explorer/TxDetail.vue"),
       },
     ],
   },
