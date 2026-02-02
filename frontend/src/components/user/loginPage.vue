@@ -2,34 +2,41 @@
   <div class="login-page">
     <p class="header">Log In</p>
 
-    <div class="submit-form">
+    <form class="submit-form" @submit.prevent="login">
+      <label for="email" class="visually-hidden">Email</label>
       <input
+        id="email"
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
+        required
       />
+      <label for="password" class="visually-hidden">Password</label>
       <input
+        id="password"
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        required
       />
       <div class="btn_findpw">
-        <button @click="$router.push({ name: 'findpassword' })">
-          Forget yout password?
+        <button type="button" @click="$router.push({ name: 'findpassword' })">
+          Forget your password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
-        <span>Login</span>
+      <button type="submit" class="btn_red" :disabled="isLoading">
+        <span v-if="isLoading">Logging in...</span>
+        <span v-else>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
       </button> -->
-      <button @click="$router.push({ name: 'signup' })" class="btn_red">
+      <button type="button" @click="$router.push({ name: 'signup' })" class="btn_red">
         <span>SignUp</span>
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -47,6 +54,7 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
     };
   },
   methods: {
@@ -61,12 +69,14 @@ export default {
         return false;
       }
 
+      this.isLoading = true;
       console.log("loginAPI START");
       const scope = this;
 
       loginAPI(
         this.userData,
         function (response) {
+          scope.isLoading = false;
           console.log(response);
           scope.$store.commit("setIsSigned", true);
           
@@ -117,6 +127,7 @@ export default {
           scope.$router.push({ name: "home" });
         },
         function (error) {
+          scope.isLoading = false;
           console.error(error);
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
         }
