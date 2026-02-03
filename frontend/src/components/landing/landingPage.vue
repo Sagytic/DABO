@@ -31,7 +31,10 @@ export default {
     }
   },
   created(){
-    setTimeout( () => this.$router.push({ path: '/user/login'}), 4000)
+    // Bolt Optimization: Check for login token to skip login page if already authenticated
+    // and reduce animation delay from 4000ms to 2000ms for better UX.
+    const nextPath = localStorage.getItem("accessToken") ? '/home' : '/user/login';
+    setTimeout( () => this.$router.push({ path: nextPath }), 2000)
   }
 };
 </script>
