@@ -1,45 +1,48 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import landing from "@/views/landing/landingPage.vue";
-import Home from "@/views/mainPage.vue";
-import badge from "@/views/badge/badgeMain.vue";
-
-import daboWallet from "@/views/daboWallet/daboWalletMain.vue";
-
-import donationBoard from "@/views/donationBoard/donationBoardPage.vue";
-import ListBoard from "@/components/campaign/donationBoardList.vue";
-import ListItem from "@/components/campaign/donationBoardListItem.vue";
-import CreateBoard from "@/components/campaign/donationBoardCreate.vue";
-import UpdateBoard from "@/components/campaign/donationBoardUpdate.vue";
-import DetailBoard from "@/components/campaign/donationBoardDetail.vue";
-import MyDonation from "@/components/campaign/bloodCardDonation.vue";
-import DonationConfirm from "@/components/campaign/donationConfirm.vue";
-import DaboDonation from "@/components/campaign/daboDonation.vue";
-import DaboConfirm from "@/components/campaign/daboConfirm.vue";
-
-import reservation from "@/views/reservation/reservationMain.vue";
-import BloodHouseList from "@/components/reservation/bloodHouseList.vue";
-import NowReservation from "@/components/reservation/nowReservation.vue";
-import ReservationHistory from "@/components/reservation/reservationHistory.vue";
-
-import bloodCard from "@/views/bloodCard/bloodCard.vue";
-import bloodcardList from "@/components/bloodcard/bloodcardList.vue";
-import bloodcardCreate from "@/components/bloodcard/bloodcardCreate.vue";
-
-import user from "@/views/user/userPage.vue";
-import Login from "@/components/user/loginPage.vue";
-import Signup from "@/components/user/signUp.vue";
-import infoChange from "@/components/user/infoChange.vue";
-import Ranking from "@/components/user/rankingDetail.vue";
-import myDabo from "@/views/user/myDabo.vue";
-import chargeDabo from "@/views/daboWallet/chargeDabo.vue";
-import payDabo from "@/views/daboWallet/payDabo.vue";
-import chargeConfirm from "@/views/daboWallet/chargeConfirm.vue";
-
-import Findpassword from "@/components/user/findPassword.vue";
 Vue.use(VueRouter);
-import exBlockChain from "@/views/exBlockChain.vue";
-import testDabo from "@/components/wallet/testDabo.vue"
+
+// Lazy Load Components
+const landing = () => import("@/views/landing/landingPage.vue");
+const Home = () => import("@/views/mainPage.vue");
+const badge = () => import("@/views/badge/badgeMain.vue");
+
+const daboWallet = () => import("@/views/daboWallet/daboWalletMain.vue");
+
+const donationBoard = () => import("@/views/donationBoard/donationBoardPage.vue");
+const ListBoard = () => import("@/components/campaign/donationBoardList.vue");
+const ListItem = () => import("@/components/campaign/donationBoardListItem.vue");
+const CreateBoard = () => import("@/components/campaign/donationBoardCreate.vue");
+const UpdateBoard = () => import("@/components/campaign/donationBoardUpdate.vue");
+const DetailBoard = () => import("@/components/campaign/donationBoardDetail.vue");
+const MyDonation = () => import("@/components/campaign/bloodCardDonation.vue");
+const DonationConfirm = () => import("@/components/campaign/donationConfirm.vue");
+const DaboDonation = () => import("@/components/campaign/daboDonation.vue");
+const DaboConfirm = () => import("@/components/campaign/daboConfirm.vue");
+
+const reservation = () => import("@/views/reservation/reservationMain.vue");
+const BloodHouseList = () => import("@/components/reservation/bloodHouseList.vue");
+const NowReservation = () => import("@/components/reservation/nowReservation.vue");
+const ReservationHistory = () => import("@/components/reservation/reservationHistory.vue");
+
+const bloodCard = () => import("@/views/bloodCard/bloodCard.vue");
+const bloodcardList = () => import("@/components/bloodcard/bloodcardList.vue");
+const bloodcardCreate = () => import("@/components/bloodcard/bloodcardCreate.vue");
+
+const user = () => import("@/views/user/userPage.vue");
+const Login = () => import("@/components/user/loginPage.vue");
+const Signup = () => import("@/components/user/signUp.vue");
+const infoChange = () => import("@/components/user/infoChange.vue");
+const Ranking = () => import("@/components/user/rankingDetail.vue");
+const myDabo = () => import("@/views/user/myDabo.vue");
+const chargeDabo = () => import("@/views/daboWallet/chargeDabo.vue");
+const payDabo = () => import("@/views/daboWallet/payDabo.vue");
+const chargeConfirm = () => import("@/views/daboWallet/chargeConfirm.vue");
+
+const Findpassword = () => import("@/components/user/findPassword.vue");
+
+const exBlockChain = () => import("@/views/exBlockChain.vue");
+const testDabo = () => import("@/components/wallet/testDabo.vue");
 const routes = [
   {
     path: "/",
