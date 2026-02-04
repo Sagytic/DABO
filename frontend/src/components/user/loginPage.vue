@@ -8,20 +8,23 @@
         type="email"
         name="email"
         placeholder="Email"
+        aria-label="Email Address"
       />
       <input
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        aria-label="Password"
       />
       <div class="btn_findpw">
         <button @click="$router.push({ name: 'findpassword' })">
           Forget yout password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
-        <span>Login</span>
+      <button @click="login()" class="btn_red" :disabled="isLoading">
+        <span v-if="isLoading"><i class="fas fa-spinner fa-spin"></i> Logging in...</span>
+        <span v-else>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
@@ -47,6 +50,7 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
     };
   },
   methods: {
@@ -61,6 +65,7 @@ export default {
         return false;
       }
 
+      this.isLoading = true;
       console.log("loginAPI START");
       const scope = this;
 
@@ -70,7 +75,7 @@ export default {
           console.log(response);
           scope.$store.commit("setIsSigned", true);
           
-          alert("로그인 성공");
+          // alert("로그인 성공");
           scope.$emit("login");
           // this.loginGetToken(response.data.accessToken);
           localStorage.setItem("accessToken", response.data.accessToken);
@@ -81,7 +86,7 @@ export default {
               scope.$store.commit("setUserId", response.data.userId);
               scope.$store.commit("setUserNickName", response.data.nickname);
               scope.$store.commit("setUserBloodType", response.data.bloodType);
-              alert("지갑 정보를 찾습니다");
+              // alert("지갑 정보를 찾습니다");
               findWallet(
                 response.data.userId,
                 function (response) {
@@ -117,6 +122,7 @@ export default {
           scope.$router.push({ name: "home" });
         },
         function (error) {
+          scope.isLoading = false;
           console.error(error);
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
         }
