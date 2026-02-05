@@ -1,0 +1,4 @@
+## 2024-05-22 - Hardcoded Secrets in Properties Files
+**Vulnerability:** Multiple critical secrets (DB credentials, JWT secret, Ethereum wallet password, Email credentials) were hardcoded in `backend/src/main/resources/application.properties`, `application-local.properties`, and `mailConfirm.properties`.
+**Learning:** Developers likely committed these files for convenience during initial setup without realizing the security risk of exposing production credentials in version control. The lack of a clear `.env.example` or documentation on environment variables contributed to this.
+**Prevention:** Always use environment variables for sensitive configuration. Provide a `.env.example` template. Configure `.gitignore` to exclude local configuration files containing secrets. Use tools like `git-secrets` or pre-commit hooks to scan for secrets before committing.
