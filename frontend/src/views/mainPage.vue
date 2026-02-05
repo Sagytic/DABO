@@ -2,23 +2,23 @@
   <div class="main-page">
     <div class="main-header">
       <div class="btn-alert">
-        <button><img src="@/assets/bell.png" /></button>
+        <button aria-label="알림"><img src="@/assets/bell.png" alt="알림" /></button>
       </div>
       <div class="d-flex header-contents">
         <div class="main-greeting">
           <p>{{ $store.state.user.nickname }} 님 <br />안녕하세요!</p>
         </div>
         <div class="btn-profile">
-          <button v-if="'A' === this.$store.state.userBloodType">
-            <img src="@/assets/A.png" />
+          <button v-if="'A' === this.$store.state.userBloodType" aria-label="A형 프로필">
+            <img src="@/assets/A.png" alt="A형" />
           </button>
-          <button v-else-if="'B' === this.$store.state.userBloodType">
-            <img src="@/assets/B.png" />
+          <button v-else-if="'B' === this.$store.state.userBloodType" aria-label="B형 프로필">
+            <img src="@/assets/B.png" alt="B형" />
           </button>
-          <button v-else-if="'AB' === this.$store.state.userBloodType">
-            <img src="@/assets/AB.png" />
+          <button v-else-if="'AB' === this.$store.state.userBloodType" aria-label="AB형 프로필">
+            <img src="@/assets/AB.png" alt="AB형" />
           </button>
-          <button v-else><img src="@/assets/O.png" /></button>
+          <button v-else aria-label="O형 프로필"><img src="@/assets/O.png" alt="O형" /></button>
           <!-- <button><img src="@/assets/profile.png" /></button> -->
         </div>
       </div>
@@ -29,13 +29,13 @@
           <div><p>내 헌혈증 기록</p></div>
           <div class="d-flex">
             <p>등록하기</p>
-            <button @click="gobloodcardCreate" class="btn-plus">
-              <img src="@/assets/plus.png" />
+            <button @click="gobloodcardCreate" class="btn-plus" aria-label="헌혈증 등록하기">
+              <img src="@/assets/plus.png" alt="등록" />
             </button>
           </div>
         </div>
         <div class="contents-bloodcard d-flex">
-          <div><img src="@/assets/imoge.png" style="width: 80px" /></div>
+          <div><img src="@/assets/imoge.png" style="width: 80px" alt="" /></div>
           <div>
             <p>
               나의 헌혈증은 {{ $store.state.bloodCardCnt }}개 입니다.
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="detail-show">
-          <button @click="goBloodcardList">자세히 보기</button>
+          <button @click="goBloodcardList" aria-label="나의 헌혈증 기록 자세히 보기">자세히 보기</button>
         </div>
       </div>
       <div class="div-donation">
@@ -54,7 +54,7 @@
         </div>
         <div class="contents-donation d-flex">
           <div class="thumnail-donation">
-            <img :src="this.baseURL + mediaUrl" />
+            <img :src="this.baseURL + mediaUrl" alt="기부 캠페인 이미지" />
           </div>
           <div class="col-8">
             <div class="donation-title">
@@ -128,7 +128,7 @@
           </div>
         </div>
         <div class="detail-show">
-          <button @click="goRanking()">자세히 보기</button>
+          <button @click="goRanking()" aria-label="DABO 랭킹 자세히 보기">자세히 보기</button>
         </div>
       </div>
       <div class="div-bloodreserve">
@@ -142,22 +142,22 @@
           </div>
           <div class="col d-flex">
             <div class="imoge">
-              <img src="@/assets/imoge.png" />
+              <img src="@/assets/imoge.png" alt="" />
               <p class="font-color-red">O</p>
               <p class="font-color-red">3.4</p>
             </div>
             <div class="imoge">
-              <img src="@/assets/imoge.png" />
+              <img src="@/assets/imoge.png" alt="" />
               <p class="font-color-red">A</p>
               <p class="font-color-red">3.4</p>
             </div>
             <div class="imoge">
-              <img src="@/assets/imoge.png" />
+              <img src="@/assets/imoge.png" alt="" />
               <p class="font-color-red">B</p>
               <p class="font-color-red">3.4</p>
             </div>
             <div class="imoge">
-              <img src="@/assets/imoge.png" />
+              <img src="@/assets/imoge.png" alt="" />
               <p class="font-color-red">AB</p>
               <p class="font-color-red">5.6</p>
             </div>
