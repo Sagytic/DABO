@@ -28,3 +28,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### Secrets ###
+.env
+src/main/resources/admin.wallet
