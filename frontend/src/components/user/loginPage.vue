@@ -8,20 +8,24 @@
         type="email"
         name="email"
         placeholder="Email"
+        aria-label="Email"
       />
       <input
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        aria-label="Password"
       />
       <div class="btn_findpw">
         <button @click="$router.push({ name: 'findpassword' })">
-          Forget yout password?
+          Forget your password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
-        <span>Login</span>
+      <p v-if="errorMessage" class="error-message" role="alert">{{ errorMessage }}</p>
+      <button @click="login()" class="btn_red" :disabled="isLoading">
+        <span v-if="!isLoading">Login</span>
+        <i v-else class="fas fa-spinner fa-spin"></i>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
@@ -47,21 +51,25 @@ export default {
         email: "",
         password: "",
       },
+      isLoading: false,
+      errorMessage: "",
     };
   },
   methods: {
     ...mapActions(["loginGetToken"]),
     login() {
       console.log("로그인 실행");
+      this.errorMessage = "";
       if (this.userData.email === "") {
-        alert("아이디 미입력");
+        this.errorMessage = "아이디 미입력";
         return false;
       } else if (this.userData.password === "") {
-        alert("패스워드 미입력");
+        this.errorMessage = "패스워드 미입력";
         return false;
       }
 
       console.log("loginAPI START");
+      this.isLoading = true;
       const scope = this;
 
       loginAPI(
@@ -70,7 +78,7 @@ export default {
           console.log(response);
           scope.$store.commit("setIsSigned", true);
           
-          alert("로그인 성공");
+          // alert("로그인 성공");
           scope.$emit("login");
           // this.loginGetToken(response.data.accessToken);
           localStorage.setItem("accessToken", response.data.accessToken);
@@ -81,7 +89,7 @@ export default {
               scope.$store.commit("setUserId", response.data.userId);
               scope.$store.commit("setUserNickName", response.data.nickname);
               scope.$store.commit("setUserBloodType", response.data.bloodType);
-              alert("지갑 정보를 찾습니다");
+              // alert("지갑 정보를 찾습니다");
               findWallet(
                 response.data.userId,
                 function (response) {
@@ -95,13 +103,13 @@ export default {
                     );
                     scope.$store.commit("setWallet", response.data)
                   } else {
-                    alert("Unexpected status code: " + response.status);
+                    console.error("Unexpected status code: " + response.status);
                   }
                 },
                 function (err) {
                   if (err.response != 404) {
                     console.error(err);
-                    alert("지갑 정보를 찾지 못했습니다.");
+                    console.error("지갑 정보를 찾지 못했습니다.");
                   }
                 }
               );
@@ -109,7 +117,7 @@ export default {
             function (err) {
               if (err.response != 404) {
                 console.error(err);
-                alert("유저 정보를 찾지 못했습니다.");
+                console.error("유저 정보를 찾지 못했습니다.");
               }
             }
           );
@@ -117,8 +125,9 @@ export default {
           scope.$router.push({ name: "home" });
         },
         function (error) {
+          scope.isLoading = false;
           console.error(error);
-          alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
+          scope.errorMessage = "유저 이메일 혹은 비밀번호가 일치하지 않습니다.";
         }
       );
       
@@ -208,5 +217,10 @@ export default {
   color: #bdbdbd;
   font-size: 12px;
   padding: 10px;
+}
+.error-message {
+  color: #e52d27;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 </style>
