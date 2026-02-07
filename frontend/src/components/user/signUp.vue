@@ -3,17 +3,26 @@
     <p class="header">Sign Up</p>
     <form class="form" @submit.prevent="submitForm">
       <div class="submit-form">
-        <input type="text" name="name" placeholder="Name" v-model="name" />
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          v-model="name"
+          aria-label="Name"
+          required
+        />
         <div class="">
           <input
             type="text"
             name="nickname"
             placeholder="NickName"
             v-model="nickname"
+            aria-label="NickName"
+            required
           />
         </div>
-        <div class="input-bloodtype">
-          <span>Blood Type</span>
+        <div class="input-bloodtype" role="radiogroup" aria-labelledby="bloodtype-label">
+          <span id="bloodtype-label">Blood Type</span>
           <div class="form_radio_btn d-flex">
             <input
               type="radio"
@@ -60,6 +69,8 @@
             v-model="email"
             name="email"
             placeholder="Email"
+            aria-label="Email"
+            required
           />
         </div>
         <input
@@ -67,12 +78,16 @@
           v-model="password"
           name="password"
           placeholder="Password"
+          aria-label="Password"
+          required
         />
         <input
           type="password"
           v-model="passwordConfirm"
           name="passwordChk"
           placeholder="Password Check"
+          aria-label="Password Check"
+          required
         />
         <button type="submit" class="btn_red">
           <span>SignUp</span>
