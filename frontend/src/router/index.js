@@ -6,17 +6,6 @@ import badge from "@/views/badge/badgeMain.vue";
 
 import daboWallet from "@/views/daboWallet/daboWalletMain.vue";
 
-import donationBoard from "@/views/donationBoard/donationBoardPage.vue";
-import ListBoard from "@/components/campaign/donationBoardList.vue";
-import ListItem from "@/components/campaign/donationBoardListItem.vue";
-import CreateBoard from "@/components/campaign/donationBoardCreate.vue";
-import UpdateBoard from "@/components/campaign/donationBoardUpdate.vue";
-import DetailBoard from "@/components/campaign/donationBoardDetail.vue";
-import MyDonation from "@/components/campaign/bloodCardDonation.vue";
-import DonationConfirm from "@/components/campaign/donationConfirm.vue";
-import DaboDonation from "@/components/campaign/daboDonation.vue";
-import DaboConfirm from "@/components/campaign/daboConfirm.vue";
-
 import reservation from "@/views/reservation/reservationMain.vue";
 import BloodHouseList from "@/components/reservation/bloodHouseList.vue";
 import NowReservation from "@/components/reservation/nowReservation.vue";
@@ -109,52 +98,52 @@ const routes = [
   {
     path: "/donationBoard",
     name: "donationBoard",
-    component: donationBoard,
+    component: () => import("@/views/donationBoard/donationBoardPage.vue"),
     children: [
       {
         path: "listBoard",
         name: "listBoard",
-        component: ListBoard,
+        component: () => import("@/components/campaign/donationBoardList.vue"),
       },
       {
         path: "listItem",
         name: "listItem",
-        component: ListItem,
+        component: () => import("@/components/campaign/donationBoardListItem.vue"),
       },
       {
         path: "createBoard",
         name: "createBoard",
-        component: CreateBoard,
+        component: () => import("@/components/campaign/donationBoardCreate.vue"),
       },
       {
         path: "updateBoard",
         name: "updateBoard",
-        component: UpdateBoard,
+        component: () => import("@/components/campaign/donationBoardUpdate.vue"),
       },
       {
         path: "detailBoard/:campaignId",
         name: "detailBoard",
-        component: DetailBoard,
+        component: () => import("@/components/campaign/donationBoardDetail.vue"),
       },
       {
         path: "myDonation",
         name: "myDonation",
-        component: MyDonation,
+        component: () => import("@/components/campaign/bloodCardDonation.vue"),
       },
       {
         path: "donationConfirm",
         name: "donationConfirm",
-        component: DonationConfirm,
+        component: () => import("@/components/campaign/donationConfirm.vue"),
       },
       {
         path: "daboDonation",
         name: "daboDonation",
-        component: DaboDonation,
+        component: () => import("@/components/campaign/daboDonation.vue"),
       },
       {
         path: "daboConfirm",
         name: "daboConfirm",
-        component: DaboConfirm,
+        component: () => import("@/components/campaign/daboConfirm.vue"),
       },
     ],
   },
