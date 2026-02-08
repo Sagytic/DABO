@@ -1,0 +1,10 @@
+On branch jules-7253707492198987801-62022eb8
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   frontend/package.json
+	new file:   frontend/pnpm-lock.yaml
+	modified:   frontend/src/components/user/loginPage.vue
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	git_status_final.log
