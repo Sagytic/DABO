@@ -2,34 +2,38 @@
   <div class="login-page">
     <p class="header">Log In</p>
 
-    <div class="submit-form">
+    <form class="submit-form" @submit.prevent="login">
       <input
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
+        aria-label="Email"
+        required
       />
       <input
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        aria-label="Password"
+        required
       />
       <div class="btn_findpw">
-        <button @click="$router.push({ name: 'findpassword' })">
-          Forget yout password?
+        <button type="button" @click="$router.push({ name: 'findpassword' })">
+          Forgot your password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
+      <button type="submit" class="btn_red">
         <span>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
       </button> -->
-      <button @click="$router.push({ name: 'signup' })" class="btn_red">
+      <button type="button" @click="$router.push({ name: 'signup' })" class="btn_red">
         <span>SignUp</span>
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -53,13 +57,6 @@ export default {
     ...mapActions(["loginGetToken"]),
     login() {
       console.log("로그인 실행");
-      if (this.userData.email === "") {
-        alert("아이디 미입력");
-        return false;
-      } else if (this.userData.password === "") {
-        alert("패스워드 미입력");
-        return false;
-      }
 
       console.log("loginAPI START");
       const scope = this;
