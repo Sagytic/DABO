@@ -2,6 +2,7 @@ package com.ecommerce.domain.repository.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data
@@ -22,6 +23,7 @@ public class DABOUser {
     @Column(name = "email",unique = true, nullable = false)
     String email;
 
+    @JsonIgnore
     String password;
 
     Long point;
