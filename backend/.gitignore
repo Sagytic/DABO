@@ -28,3 +28,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### Frontend Build Artifacts ###
+src/main/resources/dist/
