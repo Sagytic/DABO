@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkdabo_frontend"]=self["webpackChunkdabo_frontend"]||[]).push([[952],{3952:function(n,e,u){u.r(e),u.d(e,{default:function(){return a}});var r=function(){var n=this,e=n._self._c;return e("div",[e("router-view")],1)},t=[],l={},f=l,o=u(3356),s=(0,o.A)(f,r,t,!1,null,null,null),a=s.exports}}]);
+//# sourceMappingURL=952.d2f59849.js.map
