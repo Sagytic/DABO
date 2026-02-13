@@ -28,3 +28,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+### Security ###
+.env
+.env.*
+src/main/resources/admin.wallet
