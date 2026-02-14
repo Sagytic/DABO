@@ -99,12 +99,13 @@ public class CampaignService implements ICampaignService {
     }
 
     // 캠페인 전체 목록 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CampaignDto> getAllCampaign() {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Optimization: Use DB sorting (ID DESC) and EntityGraph (User) to avoid N+1 queries and in-memory sorting.
+        for(Campaign campaign : campaignRepository.findAllByOrderByCampaignIdDesc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -122,13 +123,12 @@ public class CampaignService implements ICampaignService {
 
             list.add(campaignDto);
         }
-        Collections.reverse(list);
 
         return list;
     }
 
     // 캠페인 상세 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public CampaignDto getCampaign(Long campaignId) {
 
         Optional<Campaign> optCampaign = campaignRepository.findById(campaignId);
@@ -192,8 +192,9 @@ public class CampaignService implements ICampaignService {
     }
 
     // 캠페인 검색
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CampaignDto> searchCampaign(String keyword) {
+        // Optimization: Uses EntityGraph (User) defined in repository to avoid N+1 queries.
         List<Campaign> campaigns = campaignRepository.findByTitleContaining(keyword);
         List<CampaignDto> campaignDtoList = new ArrayList<>();
 
@@ -307,11 +308,13 @@ public class CampaignService implements ICampaignService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CampaignDto> getUrgentCampaign() {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Optimization: Use DB sorting (DeadLine ASC) and EntityGraph (User) to avoid N+1 queries and complex in-memory sorting logic.
+        for(Campaign campaign : campaignRepository.findAllByOrderByDeadLineAsc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -328,14 +331,6 @@ public class CampaignService implements ICampaignService {
             campaignDto.setReceiveBloodCard(campaign.getReceiveBloodCard());
             list.add(campaignDto);
         }
-        Collections.sort(list, (o1, o2) -> {
-            int a = Integer.parseInt(o1.getDeadLine().substring(3,4)+o1.getDeadLine().substring(5,7)+o1.getDeadLine().substring(8,10));
-            int b = Integer.parseInt(o2.getDeadLine().substring(3,4)+o2.getDeadLine().substring(5,7)+o2.getDeadLine().substring(8,10));
-            if(a-b<0){
-                return -1;
-            }
-            return 1;
-        });
 
         return list;
     }
