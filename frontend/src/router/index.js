@@ -1,45 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import landing from "@/views/landing/landingPage.vue";
-import Home from "@/views/mainPage.vue";
-import badge from "@/views/badge/badgeMain.vue";
 
-import daboWallet from "@/views/daboWallet/daboWalletMain.vue";
-
-import donationBoard from "@/views/donationBoard/donationBoardPage.vue";
-import ListBoard from "@/components/campaign/donationBoardList.vue";
-import ListItem from "@/components/campaign/donationBoardListItem.vue";
-import CreateBoard from "@/components/campaign/donationBoardCreate.vue";
-import UpdateBoard from "@/components/campaign/donationBoardUpdate.vue";
-import DetailBoard from "@/components/campaign/donationBoardDetail.vue";
-import MyDonation from "@/components/campaign/bloodCardDonation.vue";
-import DonationConfirm from "@/components/campaign/donationConfirm.vue";
-import DaboDonation from "@/components/campaign/daboDonation.vue";
-import DaboConfirm from "@/components/campaign/daboConfirm.vue";
-
-import reservation from "@/views/reservation/reservationMain.vue";
-import BloodHouseList from "@/components/reservation/bloodHouseList.vue";
-import NowReservation from "@/components/reservation/nowReservation.vue";
-import ReservationHistory from "@/components/reservation/reservationHistory.vue";
-
-import bloodCard from "@/views/bloodCard/bloodCard.vue";
-import bloodcardList from "@/components/bloodcard/bloodcardList.vue";
-import bloodcardCreate from "@/components/bloodcard/bloodcardCreate.vue";
-
-import user from "@/views/user/userPage.vue";
-import Login from "@/components/user/loginPage.vue";
-import Signup from "@/components/user/signUp.vue";
-import infoChange from "@/components/user/infoChange.vue";
-import Ranking from "@/components/user/rankingDetail.vue";
-import myDabo from "@/views/user/myDabo.vue";
-import chargeDabo from "@/views/daboWallet/chargeDabo.vue";
-import payDabo from "@/views/daboWallet/payDabo.vue";
-import chargeConfirm from "@/views/daboWallet/chargeConfirm.vue";
-
-import Findpassword from "@/components/user/findPassword.vue";
 Vue.use(VueRouter);
-import exBlockChain from "@/views/exBlockChain.vue";
-import testDabo from "@/components/wallet/testDabo.vue"
+
 const routes = [
   {
     path: "/",
@@ -49,203 +13,195 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ "@/views/mainPage.vue"),
   },
   {
     path: "/user",
     name: "user",
-    component: user,
+    component: () => import(/* webpackChunkName: "user" */ "@/views/user/userPage.vue"),
     children: [
       {
         path: "login",
         name: "login",
-        component: Login,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/loginPage.vue"),
       },
       {
         path: "signup",
         name: "signup",
-        component: Signup,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/signUp.vue"),
       },
       {
         path: "findpassword",
         name: "findpassword",
-        component: Findpassword,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/findPassword.vue"),
       },
       {
         path: "infochange",
         name: "infoChange",
-        component: infoChange,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/infoChange.vue"),
       },
       {
         path: "ranking",
         name: "ranking",
-        component: Ranking,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/rankingDetail.vue"),
       },
     ],
   },
-
   {
     path: "/reservation",
     name: "reservation",
-    component: reservation,
+    component: () => import(/* webpackChunkName: "reservation" */ "@/views/reservation/reservationMain.vue"),
     children: [
       {
         path: "bloodHouseList",
         name: "bloodHouseList",
-        component: BloodHouseList,
+        component: () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/bloodHouseList.vue"),
       },
       {
         path: "nowReservation",
         name: "nowReservation",
-        component: NowReservation,
+        component: () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/nowReservation.vue"),
       },
       {
         path: "reservationHistory",
         name: "reservationHistory",
-        component: ReservationHistory,
+        component: () => import(/* webpackChunkName: "reservation" */ "@/components/reservation/reservationHistory.vue"),
       },
     ],
   },
   {
     path: "/donationBoard",
     name: "donationBoard",
-    component: donationBoard,
+    component: () => import(/* webpackChunkName: "donation" */ "@/views/donationBoard/donationBoardPage.vue"),
     children: [
       {
         path: "listBoard",
         name: "listBoard",
-        component: ListBoard,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationBoardList.vue"),
       },
       {
         path: "listItem",
         name: "listItem",
-        component: ListItem,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationBoardListItem.vue"),
       },
       {
         path: "createBoard",
         name: "createBoard",
-        component: CreateBoard,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationBoardCreate.vue"),
       },
       {
         path: "updateBoard",
         name: "updateBoard",
-        component: UpdateBoard,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationBoardUpdate.vue"),
       },
       {
         path: "detailBoard/:campaignId",
         name: "detailBoard",
-        component: DetailBoard,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationBoardDetail.vue"),
       },
       {
         path: "myDonation",
         name: "myDonation",
-        component: MyDonation,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/bloodCardDonation.vue"),
       },
       {
         path: "donationConfirm",
         name: "donationConfirm",
-        component: DonationConfirm,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/donationConfirm.vue"),
       },
       {
         path: "daboDonation",
         name: "daboDonation",
-        component: DaboDonation,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/daboDonation.vue"),
       },
       {
         path: "daboConfirm",
         name: "daboConfirm",
-        component: DaboConfirm,
+        component: () => import(/* webpackChunkName: "donation" */ "@/components/campaign/daboConfirm.vue"),
       },
     ],
   },
   {
     path: "/dabowallet",
     name: "daboWallet",
-    component: daboWallet,
-    // children: [
-    //   {
-    //     path: "/chargedabo",
-    //     name: "chargedabo",
-    //     component: chargeDabo,
-    //   },
-    // ]
+    component: () => import(/* webpackChunkName: "wallet" */ "@/views/daboWallet/daboWalletMain.vue"),
   },
   {
     path: "/testDabo",
     name: "testDabo",
-    component: testDabo,
+    component: () => import(/* webpackChunkName: "test" */ "@/components/wallet/testDabo.vue"),
   },
   {
     path: "/dabowallet/chargedabo",
     name: "chargedabo",
-    component: chargeDabo,
+    component: () => import(/* webpackChunkName: "wallet" */ "@/views/daboWallet/chargeDabo.vue"),
   },
   {
     path: "/dabowallet/paydabo",
     name: "paydabo",
-    component: payDabo,
+    component: () => import(/* webpackChunkName: "wallet" */ "@/views/daboWallet/payDabo.vue"),
   },
   {
     path: "/dabowallet/chargeconfirm",
     name: "chargeconfirm",
-    component: chargeConfirm,
+    component: () => import(/* webpackChunkName: "wallet" */ "@/views/daboWallet/chargeConfirm.vue"),
   },
   {
     path: "/bloodcard",
     name: "bloodCard",
-    component: bloodCard,
+    component: () => import(/* webpackChunkName: "bloodcard" */ "@/views/bloodCard/bloodCard.vue"),
     children: [
       {
         path: "list",
         name: "bloodcardList",
-        component: bloodcardList,
+        component: () => import(/* webpackChunkName: "bloodcard" */ "@/components/bloodcard/bloodcardList.vue"),
       },
       {
         path: "create",
         name: "bloodcardCreate",
-        component: bloodcardCreate,
+        component: () => import(/* webpackChunkName: "bloodcard" */ "@/components/bloodcard/bloodcardCreate.vue"),
       },
     ],
   },
   {
     path: "/badge",
     name: "badge",
-    component: badge,
+    component: () => import(/* webpackChunkName: "badge" */ "@/views/badge/badgeMain.vue"),
   },
   {
     path: "/mydabo",
     name: "myDabo",
-    component: myDabo,
+    component: () => import(/* webpackChunkName: "user" */ "@/views/user/myDabo.vue"),
   },
   {
     name: "exBlockChain",
     path: "/exBlockChain",
-    component: exBlockChain,
+    component: () => import(/* webpackChunkName: "explorer" */ "@/views/exBlockChain.vue"),
     children: [
       {
         name: "exBlockChain.dashboard",
         path: "dashboard",
-        component: () => import("@/components/explorer/Dashboard.vue"),
+        component: () => import(/* webpackChunkName: "explorer" */ "@/components/explorer/Dashboard.vue"),
       },
       {
         name: "exBlockChain.block",
         path: "blocks",
-        component: () => import("@/components/explorer/BlockListView.vue"),
+        component: () => import(/* webpackChunkName: "explorer" */ "@/components/explorer/BlockListView.vue"),
       },
       {
         name: "exBlockChain.block.detail",
         path: "block/:blockNumber",
-        component: () => import("@/components/explorer/BlockDetail.vue"),
+        component: () => import(/* webpackChunkName: "explorer" */ "@/components/explorer/BlockDetail.vue"),
       },
       {
         name: "exBlockChain.tx",
         path: "txes",
-        component: () => import("@/components/explorer/TxListView.vue"),
+        component: () => import(/* webpackChunkName: "explorer" */ "@/components/explorer/TxListView.vue"),
       },
       {
         name: "exBlockChain.tx.detail",
         path: "tx/:hash",
-        component: () => import("@/components/explorer/TxDetail.vue"),
+        component: () => import(/* webpackChunkName: "explorer" */ "@/components/explorer/TxDetail.vue"),
       },
     ],
   },
