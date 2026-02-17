@@ -3,17 +3,28 @@
     <p class="header">Sign Up</p>
     <form class="form" @submit.prevent="submitForm">
       <div class="submit-form">
-        <input type="text" name="name" placeholder="Name" v-model="name" />
+        <label for="name" class="visually-hidden">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Name"
+          v-model="name"
+          required
+        />
         <div class="">
+          <label for="nickname" class="visually-hidden">NickName</label>
           <input
             type="text"
+            id="nickname"
             name="nickname"
             placeholder="NickName"
             v-model="nickname"
+            required
           />
         </div>
-        <div class="input-bloodtype">
-          <span>Blood Type</span>
+        <div class="input-bloodtype" role="radiogroup" aria-labelledby="bloodtype-label">
+          <span id="bloodtype-label">Blood Type</span>
           <div class="form_radio_btn d-flex">
             <input
               type="radio"
@@ -54,25 +65,34 @@
         </div>
 
         <div class="d-flex">
+          <label for="email" class="visually-hidden">Email</label>
           <input
             class=""
             type="email"
+            id="email"
             v-model="email"
             name="email"
             placeholder="Email"
+            required
           />
         </div>
+        <label for="password" class="visually-hidden">Password</label>
         <input
           type="password"
+          id="password"
           v-model="password"
           name="password"
           placeholder="Password"
+          required
         />
+        <label for="passwordConfirm" class="visually-hidden">Password Check</label>
         <input
           type="password"
+          id="passwordConfirm"
           v-model="passwordConfirm"
           name="passwordChk"
           placeholder="Password Check"
+          required
         />
         <button type="submit" class="btn_red">
           <span>SignUp</span>
@@ -383,5 +403,17 @@ export default {
 .form_radio_btn input[type="radio"] + label {
   background: #f9fafc;
   color: #666;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
