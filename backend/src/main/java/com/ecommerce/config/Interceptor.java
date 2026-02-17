@@ -22,8 +22,6 @@ public class Interceptor extends HandlerInterceptorAdapter {
             throws Exception {
         final String token = request.getHeader(TOKEN);
 
-        logger.debug("JwtInterceptor > preHandle > token: " + token);
-
         if (StringUtils.equals(request.getMethod(), "OPTIONS")) {
             logger.debug("if request options method is options, return true");
 
