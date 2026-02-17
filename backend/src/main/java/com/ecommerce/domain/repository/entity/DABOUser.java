@@ -22,6 +22,7 @@ public class DABOUser {
     @Column(name = "email",unique = true, nullable = false)
     String email;
 
+    @ToString.Exclude
     String password;
 
     Long point;

@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             // If header is present, try grab user principal from database and perform authorization
             Authentication authentication = getAuthentication(request);
-            System.out.println(authentication);
             // jwt 토큰으로 부터 획득한 인증 정보(authentication) 설정.
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception ex) {
@@ -71,7 +70,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             DecodedJWT decodedJWT = verifier.verify(token.replace(JwtTokenUtil.TOKEN_PREFIX, ""));
             String userId = decodedJWT.getSubject();
 
-            System.out.println(userId);
             // Search in the DB if we find the user by token subject (username)
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
             if (userId != null) {
@@ -79,7 +77,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 if(!found.isPresent()) throw new AuthenticationException();
                 // jwt 토큰에 포함된 계정 정보(userId) 통해 실제 디비에 해당 정보의 계정이 있는지 조회.
                  DABOUser user = found.get();
-                 System.out.println("jwtAuth :"+ user);
                  if(user != null) {
 //                    // 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
                     SsafyUserDetails userDetails = new SsafyUserDetails(user);
