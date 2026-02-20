@@ -23,7 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -104,7 +108,7 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        for(Campaign campaign : campaignRepository.findAllByOrderByCampaignIdDesc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -122,7 +126,6 @@ public class CampaignService implements ICampaignService {
 
             list.add(campaignDto);
         }
-        Collections.reverse(list);
 
         return list;
     }
@@ -311,7 +314,7 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        for(Campaign campaign : campaignRepository.findAllByOrderByDeadLineAsc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -328,14 +331,6 @@ public class CampaignService implements ICampaignService {
             campaignDto.setReceiveBloodCard(campaign.getReceiveBloodCard());
             list.add(campaignDto);
         }
-        Collections.sort(list, (o1, o2) -> {
-            int a = Integer.parseInt(o1.getDeadLine().substring(3,4)+o1.getDeadLine().substring(5,7)+o1.getDeadLine().substring(8,10));
-            int b = Integer.parseInt(o2.getDeadLine().substring(3,4)+o2.getDeadLine().substring(5,7)+o2.getDeadLine().substring(8,10));
-            if(a-b<0){
-                return -1;
-            }
-            return 1;
-        });
 
         return list;
     }
