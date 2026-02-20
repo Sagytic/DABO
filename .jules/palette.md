@@ -1,0 +1,3 @@
+## 2024-05-22 - Semantic Forms and Accessibility
+**Learning:** Found that `loginPage.vue` was using a `div` container for inputs instead of a semantic `<form>` tag. This prevents native form submission behavior and hinders screen reader accessibility. Also, inputs lacked associated `<label>` elements, relying solely on placeholders which is an accessibility anti-pattern.
+**Action:** Always wrap input groups in a `<form>` tag with `@submit.prevent`. Use `<label>` elements linked via `for`/`id` attributes. If visual design requires no labels, use a `.visually-hidden` class to keep them accessible to screen readers but hidden visually. Ensure buttons have explicit `type="submit"` or `type="button"` to prevent unexpected behavior.
