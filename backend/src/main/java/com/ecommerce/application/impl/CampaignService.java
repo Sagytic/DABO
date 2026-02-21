@@ -104,7 +104,8 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Optimization: Use DB sorting and eager loading to resolve N+1 issue
+        for(Campaign campaign : campaignRepository.findAllByOrderByCampaignIdDesc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -122,7 +123,6 @@ public class CampaignService implements ICampaignService {
 
             list.add(campaignDto);
         }
-        Collections.reverse(list);
 
         return list;
     }
@@ -311,7 +311,8 @@ public class CampaignService implements ICampaignService {
 
         List<CampaignDto> list = new ArrayList<>();
 
-        for(Campaign campaign : campaignRepository.findAll()) {
+        // Optimization: Use DB sorting and eager loading to resolve N+1 issue
+        for(Campaign campaign : campaignRepository.findAllByOrderByDeadLineAsc()) {
 
             CampaignDto campaignDto = new CampaignDto();
 
@@ -328,14 +329,6 @@ public class CampaignService implements ICampaignService {
             campaignDto.setReceiveBloodCard(campaign.getReceiveBloodCard());
             list.add(campaignDto);
         }
-        Collections.sort(list, (o1, o2) -> {
-            int a = Integer.parseInt(o1.getDeadLine().substring(3,4)+o1.getDeadLine().substring(5,7)+o1.getDeadLine().substring(8,10));
-            int b = Integer.parseInt(o2.getDeadLine().substring(3,4)+o2.getDeadLine().substring(5,7)+o2.getDeadLine().substring(8,10));
-            if(a-b<0){
-                return -1;
-            }
-            return 1;
-        });
 
         return list;
     }
