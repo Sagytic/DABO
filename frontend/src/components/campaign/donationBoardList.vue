@@ -7,6 +7,7 @@
     <!-- 검색창 -->
     <div class="submit-form">
       <div class="input-check d-flex">
+        <label for="campaignSearch" class="visually-hidden">캠페인 검색</label>
         <input
           type="text"
           name="keyword"
@@ -23,13 +24,19 @@
     <div class="contents-title d-flex">
       <div class="d-flex">
         <p>등록하기</p>
-        <button @click="goCreate()" class="btn-plus">
-          <img src="@/assets/plus.png" />
+        <button @click="goCreate()" class="btn-plus" aria-label="캠페인 등록">
+          <img src="@/assets/plus.png" alt="Plus icon" />
         </button>
       </div>
     </div>
     <div>
-      <div class="container">
+      <div v-if="isLoading" class="container text-center py-5">
+        <p>로딩중...</p>
+      </div>
+      <div v-else-if="campaignList.length === 0" class="container text-center py-5">
+        <p>등록된 캠페인이 없습니다.</p>
+      </div>
+      <div v-else class="container">
         <campaign-list-item
           v-for="campaign in campaignList"
           :key="campaign.id"
@@ -51,16 +58,19 @@ export default {
     return {
       campaignList: [],
       keyword: "",
+      isLoading: true,
     };
   },
   created() {
-    const response = axios
+    axios
       .get(API_BASE_URL + "/api/donationBoard/listBoard")
       .then((res) => {
         console.log(res.data);
         this.campaignList = res.data;
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
-    console.log(response);
   },
   components: {
     CampaignListItem,
@@ -73,7 +83,8 @@ export default {
       this.$router.push({ name: "createBoard", params: "" });
     },
     goSearch() {
-      const response = axios
+      this.isLoading = true;
+      axios
         .get(API_BASE_URL + "/api/donationBoard/search", {
           params: {
             keyword: this.keyword,
@@ -82,8 +93,10 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.campaignList = res.data;
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
-      console.log(response);
     },
   },
 };
