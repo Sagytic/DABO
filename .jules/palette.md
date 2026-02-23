@@ -1,0 +1,3 @@
+## 2024-05-22 - Semantic Forms and Hidden Labels
+**Learning:** The login form was implemented using `<div>` wrappers and placeholder attributes instead of semantic `<form>` and `<label>` elements. This makes the form inaccessible to screen readers and prevents standard browser behaviors like submitting on 'Enter'.
+**Action:** When refactoring forms, always wrap inputs in a `<form>` tag. Use `<label>` elements linked via `for`/`id` attributes. If the design relies on placeholders (which is an anti-pattern but common), use a `.visually-hidden` class to hide the label visually while keeping it accessible to assistive technology. This allows maintaining the visual design while strictly adhering to accessibility standards.
