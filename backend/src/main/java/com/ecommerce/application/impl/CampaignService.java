@@ -165,6 +165,18 @@ public class CampaignService implements ICampaignService {
         }
 
         Campaign campaign = optCampaign.get();
+        DABOUser user = commonService.getLoginUser();
+
+        // Check if user is logged in
+        if (user == null || user.getUserId() == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Check ownership
+        if (!campaign.getUser().getUserId().equals(user.getUserId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         campaign.setTitle(campaignDto.getTitle());
         campaign.setContent(campaignDto.getContent());
         campaign.setTarget(campaignDto.getTarget());
@@ -185,10 +197,23 @@ public class CampaignService implements ICampaignService {
 
         if(!optCampaign.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
-            campaignRepository.delete(optCampaign.get());
-            return new ResponseEntity<>(HttpStatus.OK);
         }
+
+        Campaign campaign = optCampaign.get();
+        DABOUser user = commonService.getLoginUser();
+
+        // Check if user is logged in
+        if (user == null || user.getUserId() == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Check ownership
+        if (!campaign.getUser().getUserId().equals(user.getUserId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        campaignRepository.delete(campaign);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 캠페인 검색
