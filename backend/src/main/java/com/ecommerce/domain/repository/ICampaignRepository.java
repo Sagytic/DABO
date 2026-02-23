@@ -1,6 +1,7 @@
 package com.ecommerce.domain.repository;
 
 import com.ecommerce.domain.repository.entity.Campaign;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,12 @@ import java.util.List;
 @Repository
 public interface ICampaignRepository  extends JpaRepository<Campaign, Long> {
     List<Campaign> findByTitleContaining(String keyword);
+
+    @EntityGraph(attributePaths = {"user"})
+    List<Campaign> findAllByOrderByCampaignIdDesc();
+
+    @EntityGraph(attributePaths = {"user"})
+    List<Campaign> findAllByOrderByDeadLineAsc();
 
     @Transactional
     @Modifying
