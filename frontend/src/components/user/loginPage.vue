@@ -2,34 +2,40 @@
   <div class="login-page">
     <p class="header">Log In</p>
 
-    <div class="submit-form">
+    <form class="submit-form" @submit.prevent="login">
+      <label for="email" class="visually-hidden">Email</label>
       <input
+        id="email"
         v-model="userData.email"
         type="email"
         name="email"
         placeholder="Email"
+        required
       />
+      <label for="password" class="visually-hidden">Password</label>
       <input
+        id="password"
         v-model="userData.password"
         type="password"
         name="password"
         placeholder="Password"
+        required
       />
       <div class="btn_findpw">
-        <button @click="$router.push({ name: 'findpassword' })">
+        <button type="button" @click="$router.push({ name: 'findpassword' })">
           Forget yout password?
         </button>
       </div>
-      <button @click="login()" class="btn_red">
+      <button type="submit" class="btn_red">
         <span>Login</span>
       </button>
       <!-- <button class="btn_social">
         <img src="@/assets/kakao_login_medium_wide.png" />
       </button> -->
-      <button @click="$router.push({ name: 'signup' })" class="btn_red">
+      <button type="button" @click="$router.push({ name: 'signup' })" class="btn_red">
         <span>SignUp</span>
       </button>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -149,6 +155,17 @@ export default {
 </script>
 
 <style scoped>
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .login-page {
   text-align: -webkit-center;
   margin: 0 auto;
